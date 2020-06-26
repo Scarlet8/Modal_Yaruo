@@ -1,8 +1,7 @@
-
 #下準備
-# -*- coding: utf-8 -*-
 import pandas as pd
 import os,sys,tkinter,tkinter.filedialog,tkinter.messagebox
+from time import sleep
 
 pre_num = (input('\n'*4 + 'やりたい作業の番号を選んでください(半角数字)\n\n\
 [1]：血統コラムからモーダルを作成\n\n\
@@ -24,6 +23,7 @@ except ValueError: #数字以外のエラー処理
         info_num = int(pre_num)
     except ValueError:
         print('\n'*4 + '最初からやり直してください\n\nアプリを終了します' + '\n'*4 )
+        sleep(1)
         sys.exit(1)
 
 if info_num > 3 : #4以上のエラー処理
@@ -35,11 +35,12 @@ if info_num > 3 : #4以上のエラー処理
      + '\n'*4 + '今度こそ正しく入力してください→：'))
     if info_num > 3:
         print('\n'*4 + '最初からやり直してください\n\nアプリを終了します' + '\n'*4 )
+        sleep(1)
         sys.exit(1)
     elif ValueError:
         print('\n'*4 + '最初からやり直してください\n\nアプリを終了します' + '\n'*4 )
+        sleep(1)
         sys.exit(1)
-
 
 elif info_num < 1: #1未満のエラー処理
     print('\n'*4 + '＜＜警告＞＞1から3までの半角数字を入力してください！' + '\n'*4 )
@@ -50,9 +51,11 @@ elif info_num < 1: #1未満のエラー処理
     + '\n'*4 + '今度こそ正しく入力してください→：'))
     if info_num < 1:
         print('\n'*4 + '最初からやり直してください\n\nアプリを終了します' + '\n'*4 )
+        sleep(1)
         sys.exit(1)
     elif ValueError:
         print('\n'*4 + '最初からやり直してください\n\nアプリを終了します' + '\n'*4 )
+        sleep(1)
         sys.exit(1)
 
 if info_num == 2: #馬体診断の分岐処理
@@ -85,6 +88,7 @@ if info_num == 2: #馬体診断の分岐処理
             batai_num = int(batai_num)
         except ValueError:
             print('\n'*4 + '最初からやり直してください\n\nアプリを終了します' + '\n'*4 )
+            sleep(1)
             sys.exit(1)
 
     if batai_num > 7 : #8以上のエラー処理
@@ -101,9 +105,11 @@ if info_num == 2: #馬体診断の分岐処理
      + '\n'*4 + '今度こそ正しく入力してください→：'))
         except ValueError:
             print('\n'*4 + '最初からやり直してください\n\nアプリを終了します' + '\n'*4 )
+            sleep(1)
             sys.exit(1)
         if batai_num > 7:
             print('\n'*4 + '最初からやり直してください\n\nアプリを終了します' + '\n'*4 )
+            sleep(1)
             sys.exit(1)
 
     elif batai_num < 1: #1未満のエラー処理
@@ -120,9 +126,11 @@ if info_num == 2: #馬体診断の分岐処理
     + '\n'*4 + '今度こそ正しく入力してください→：'))
         except ValueError:
             print('\n'*4 + '最初からやり直してください\n\nアプリを終了します' + '\n'*4 )
+            sleep(1)
             sys.exit(1)
         if batai_num < 1:
             print('\n'*4 + '最初からやり直してください\n\nアプリを終了します' + '\n'*4 )
+            sleep(1)
             sys.exit(1)
 
 author = ['0','吉田','加藤','細江','池江','小島','坂口','佐藤']
@@ -134,6 +142,7 @@ root.withdraw()
 tkinter.messagebox.showinfo('モーダルやる夫','TARGETから出力したCSVファイルを選択してください！\n★★★ファイル名がレース名.csvになってないとダメです★★★')
 ret1 = tkinter.filedialog.askopenfilename(title = 'TARGETから出力したCSVファイルを選ぶ',initialdir = cd,multiple = False)
 if ret1 == "": #キャンセル押したときに終了
+    sleep(1)
     sys.exit(1)
 
 try: #デコード処理
@@ -307,6 +316,8 @@ df1['性別'] = df1['性別'].str.replace(r'セ',r'セン')
 
 #パドック切断対策
 df1['レースID'] = df1['レースID'].str.replace(r'RX','')
+df1['レースID'] = df1['レースID'].str.replace(r'UX','')
+df1['馬ID'] = df1['馬ID'].str.replace(r'RX','')
 df1['馬ID'] = df1['馬ID'].str.replace(r'UX','')
 
 
@@ -315,6 +326,7 @@ if info_num == 1 : #血統パート
     tkinter.messagebox.showinfo('モーダルやる夫','望田ファイルを選択してください！')
     ret2 = tkinter.filedialog.askopenfilename(title = '望田ファイルを選ぶ', initialdir = cd , multiple = False)
     if ret2 == "": #キャンセル押したときに終了
+        sleep(1)
         sys.exit(1)
 
     try: #デコード処理
@@ -384,6 +396,7 @@ if info_num == 1 : #血統パート
     file1 = tkinter.filedialog.asksaveasfilename(initialfile = defaultname1 , filetypes = fTyp1,initialdir = iDir1)
 
     if file1 == "": #キャンセル押したときに終了
+        sleep(1)
         sys.exit(1)
 
     with open(file1, mode = 'w', encoding = 'utf-8') as f: #モーダルファイルに書き込む
@@ -392,12 +405,14 @@ if info_num == 1 : #血統パート
         else:
             tkinter.messagebox.showinfo('モーダルやる夫','☆☆☆出力完了しました☆☆☆')
             print('\n\n\n☆☆☆出力完了しました☆☆☆')
+            sleep(1)
             sys.exit(1)
 
 elif info_num == 2 : #馬体パート
     tkinter.messagebox.showinfo('モーダルやる夫','馬体診断コラムの原稿ファイルを選択してください！')
     ret2 = tkinter.filedialog.askopenfilename(title = '馬体診断コラムの原稿ファイルを選ぶ', initialdir = cd , multiple = False)
     if ret2 == "": #キャンセル押したときに終了
+        sleep(1)
         sys.exit(1)
 
     try: #デコード処理
@@ -459,6 +474,7 @@ elif info_num == 2 : #馬体パート
     tkinter.messagebox.showinfo('モーダルやる夫','馬体診断モーダルファイルの出力先を選択してください！')
     file1 = tkinter.filedialog.asksaveasfilename(initialfile = defaultname1 , filetypes = fTyp1,initialdir = iDir1)
     if file1 == "":
+        sleep(1)
         sys.exit(1)
 
     with open(file1,mode = 'w',encoding = 'utf-8') as f: #モーダルファイルに書き込む
@@ -468,12 +484,15 @@ elif info_num == 2 : #馬体パート
         else:
             tkinter.messagebox.showinfo('モーダルやる夫','☆☆☆出力完了しました☆☆☆')
             print('\n\n\n☆☆☆出力完了しました☆☆☆')
+            sleep(1)
             sys.exit(1)
+
 elif info_num == 3 : #トレセンパート
     #馬三郎ファイルを読み込む
     tkinter.messagebox.showinfo('モーダルやる夫','馬三郎ファイル（コメント）を選択してください！')
     ret2 = tkinter.filedialog.askopenfilename(title = '馬三郎ファイル（コメント）を選ぶ', initialdir = cd , multiple = False)
     if ret2 == "":
+        sleep(1)
         sys.exit(1)
 
     try:
@@ -540,7 +559,7 @@ elif info_num == 3 : #トレセンパート
             tkinter.messagebox.showinfo('モーダルやる夫','！！！モーダル作成に移行します！！！')
 
     #モーダル出力
-
+    sleep(1)
     defaultname2 = str('trecen_repo_' + nkID + '.csv')
     fTyp4 = [(".csv",".csv")]
     iDir4 = os.path.abspath(os.path.dirname(__file__))
@@ -550,6 +569,8 @@ elif info_num == 3 : #トレセンパート
         for row in df3str:
             f.write(nkID + ',' + str(row[1]) + ',' + year + filename.rstrip('.csv') + '(' + str(row[2]) + ')' + ',' + str(row[14]) + '「' + str(row[13].rstrip('。')) + '」\n')
         else:
+            sleep(1)
             tkinter.messagebox.showinfo('モーダルやる夫','☆☆☆出力完了しました☆☆☆')
             print('\n\n\n☆☆☆出力完了しました☆☆☆')
+            sleep(1)
             sys.exit(1)
