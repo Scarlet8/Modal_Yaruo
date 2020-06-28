@@ -320,6 +320,25 @@ df1['レースID'] = df1['レースID'].str.replace(r'UX','')
 df1['馬ID'] = df1['馬ID'].str.replace(r'RX','')
 df1['馬ID'] = df1['馬ID'].str.replace(r'UX','')
 
+#前走着順の丸数字対策
+df1['前走着順'] = df1['前走着順'].str.replace(r'①',r'1')
+df1['前走着順'] = df1['前走着順'].str.replace(r'②',r'2')
+df1['前走着順'] = df1['前走着順'].str.replace(r'③',r'3')
+df1['前走着順'] = df1['前走着順'].str.replace(r'④',r'4')
+df1['前走着順'] = df1['前走着順'].str.replace(r'⑤',r'5')
+df1['前走着順'] = df1['前走着順'].str.replace(r'⑥',r'6')
+df1['前走着順'] = df1['前走着順'].str.replace(r'⑦',r'7')
+df1['前走着順'] = df1['前走着順'].str.replace(r'⑧',r'8')
+df1['前走着順'] = df1['前走着順'].str.replace(r'⑨',r'9')
+df1['前走着順'] = df1['前走着順'].str.replace(r'⑩',r'10')
+df1['前走着順'] = df1['前走着順'].str.replace(r'⑪',r'11')
+df1['前走着順'] = df1['前走着順'].str.replace(r'⑫',r'12')
+df1['前走着順'] = df1['前走着順'].str.replace(r'⑬',r'13')
+df1['前走着順'] = df1['前走着順'].str.replace(r'⑭',r'14')
+df1['前走着順'] = df1['前走着順'].str.replace(r'⑮',r'15')
+df1['前走着順'] = df1['前走着順'].str.replace(r'⑯',r'16')
+df1['前走着順'] = df1['前走着順'].str.replace(r'⑰',r'17')
+df1['前走着順'] = df1['前走着順'].str.replace(r'⑱',r'18')
 
 
 if info_num == 1 : #血統パート
