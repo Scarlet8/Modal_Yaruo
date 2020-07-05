@@ -140,20 +140,23 @@ root = tkinter.Tk()
 cd = os.getcwd()
 root.withdraw()
 tkinter.messagebox.showinfo('モーダルやる夫','TARGETから出力したCSVファイルを選択してください！\n★★★ファイル名がレース名.csvになってないとダメです★★★')
-ret1 = tkinter.filedialog.askopenfilename(title = 'TARGETから出力したCSVファイルを選ぶ',initialdir = cd,multiple = False)
+ret1 = tkinter.filedialog.askopenfilename(title = 'TARGETから出力したCSVファイルを選ぶ', initialdir = cd , multiple = False )
 if ret1 == "": #キャンセル押したときに終了
     sleep(1)
     sys.exit(1)
 
 try: #デコード処理
-    df1 = pd.read_csv(ret1,sep=',',encoding = 'shift-jis', \
-    names = ['レースID','馬ID','馬名','性別','年齢','所属','調教師名','父','母','母父','前走レース名','前走人気','前走着順'] , dtype = object)
+    df1 = pd.read_csv( ret1 , sep = ',', encoding = 'utf-8', names = \
+    ['レースID','馬ID','馬名','性別','年齢','所属','調教師名','父','母','母父','前走レース名','前走人気','前走着順'] , dtype = object )
+
 except UnicodeDecodeError:
-    df1 = pd.read_csv(ret1,sep=',',encoding = 'utf-8', names = \
-     ['レースID','馬ID','馬名','性別','年齢','所属','調教師名','父','母','母父','前走レース名','前走人気','前走着順'] , dtype = object)
+    df1 = pd.read_csv( ret1 , sep = ',', encoding = 'cp932', names = \
+    ['レースID','馬ID','馬名','性別','年齢','所属','調教師名','父','母','母父','前走レース名','前走人気','前走着順'] , dtype = object )
+
 except UnicodeDecodeError:
-    df1 = pd.read_csv(ret1,sep=',',encoding = 'cp932', names = \
-     ['レースID','馬ID','馬名','性別','年齢','所属','調教師名','父','母','母父','前走レース名','前走人気','前走着順'] , dtype = object)
+    df1 = pd.read_csv( ret1 , sep = ',', encoding = 'shift-jis', names = \
+    ['レースID','馬ID','馬名','性別','年齢','所属','調教師名','父','母','母父','前走レース名','前走人気','前走着順'] , dtype = object )
+
 
 #ヤマザキ春の置換祭り
 #重賞レース名
@@ -266,34 +269,59 @@ df1['前走レース名'] = df1['前走レース名'].str.replace('フェニッ�
 df1['前走レース名'] = df1['前走レース名'].str.replace('カーネーショ','カーネーションC')
 df1['前走レース名'] = df1['前走レース名'].str.replace('プリンシパル','プリンシパルS')
 df1['前走レース名'] = df1['前走レース名'].str.replace('スイートピー','スイートピーS')
-df1['前走レース名'] = df1['前走レース名'].str.replace('フローラルウ','フローラルウォーク賞')
+df1['前走レース名'] = df1['前走レース名'].str.replace('フローラルウ','Fウォーク賞')
 df1['前走レース名'] = df1['前走レース名'].str.replace('マーガレット','マーガレットS')
 df1['前走レース名'] = df1['前走レース名'].str.replace('セントポーリ','セントポーリア賞')
 df1['前走レース名'] = df1['前走レース名'].str.replace('ジュニアカッ','ジュニアC')
 
+#地方重賞
+df1['前走レース名'] = df1['前走レース名'].str.replace('ＴＣＫG3','TCK女王盃')
+df1['前走レース名'] = df1['前走レース名'].str.replace('川崎記G1','川崎記念')
+df1['前走レース名'] = df1['前走レース名'].str.replace('佐賀記G3','佐賀記念')
+df1['前走レース名'] = df1['前走レース名'].str.replace('エンプG2','エンプレス杯')
+df1['前走レース名'] = df1['前走レース名'].str.replace('黒船賞G3','黒船賞')
+df1['前走レース名'] = df1['前走レース名'].str.replace('ダイオG2','ダイオライト記念')
+df1['前走レース名'] = df1['前走レース名'].str.replace('名古屋G3','名古屋大賞典')
+df1['前走レース名'] = df1['前走レース名'].str.replace('マリーG3','マリーンC')
+df1['前走レース名'] = df1['前走レース名'].str.replace('東京スG3','東京スプリント')
+df1['前走レース名'] = df1['前走レース名'].str.replace('かきつG3','かきつばた記念')
+df1['前走レース名'] = df1['前走レース名'].str.replace('かしわG1','かしわ記念')
+df1['前走レース名'] = df1['前走レース名'].str.replace('かきつG3','かきつばた記念')
+df1['前走レース名'] = df1['前走レース名'].str.replace('兵庫ＣG2','兵庫CS')
+df1['前走レース名'] = df1['前走レース名'].str.replace('さきたG2','さきたま杯')
+df1['前走レース名'] = df1['前走レース名'].str.replace('北海道G3','北海道SC')
+df1['前走レース名'] = df1['前走レース名'].str.replace('関東オG2','関東オークス')
+df1['前走レース名'] = df1['前走レース名'].str.replace('帝王賞G1','帝王賞')
+df1['前走レース名'] = df1['前走レース名'].str.replace('ジャパG1','JDD')
+df1['前走レース名'] = df1['前走レース名'].str.replace('スパーG3','スパーキングLC')
+df1['前走レース名'] = df1['前走レース名'].str.replace('マーキG3','マーキュリーC')
+df1['前走レース名'] = df1['前走レース名'].str.replace('クラスG3','クラスターC')
+df1['前走レース名'] = df1['前走レース名'].str.replace('サマーG3','サマーチャンピオン')
+df1['前走レース名'] = df1['前走レース名'].str.replace('ブリーG3','ブリーダーズGC')
+df1['前走レース名'] = df1['前走レース名'].str.replace('テレ玉G2','オーバルスプリント')
+df1['前走レース名'] = df1['前走レース名'].str.replace('白山大G3','白山大賞典')
+df1['前走レース名'] = df1['前走レース名'].str.replace('日本テG2','日本テレビ盃')
+df1['前走レース名'] = df1['前走レース名'].str.replace('東京盃G2','東京盃')
+df1['前走レース名'] = df1['前走レース名'].str.replace('ＬプレG2','レディスプレリュード')
+df1['前走レース名'] = df1['前走レース名'].str.replace('マイルG1','マイルCS南部杯')
+df1['前走レース名'] = df1['前走レース名'].str.replace('エーデG3','エーデルワイス賞')
+df1['前走レース名'] = df1['前走レース名'].str.replace('JBCスプG1','JBCスプリント')
+df1['前走レース名'] = df1['前走レース名'].str.replace('JBCクラG1','JBCクラシック')
+df1['前走レース名'] = df1['前走レース名'].str.replace('JBCＬクG1','JBCレディスC')
+df1['前走レース名'] = df1['前走レース名'].str.replace('JBC２歳G1','JBC2歳優駿')
+df1['前走レース名'] = df1['前走レース名'].str.replace('浦和記G2','浦和記念')
+df1['前走レース名'] = df1['前走レース名'].str.replace('兵庫ジG2','兵庫ジュニアGP')
+df1['前走レース名'] = df1['前走レース名'].str.replace('クイーG3','クイーン賞')
+df1['前走レース名'] = df1['前走レース名'].str.replace('名古屋G3','名古屋グランプリ')
+df1['前走レース名'] = df1['前走レース名'].str.replace('全日本G1','全日本2歳優駿')
+df1['前走レース名'] = df1['前走レース名'].str.replace('兵庫ゴG3','兵庫ゴールドT')
+df1['前走レース名'] = df1['前走レース名'].str.replace('東京大G1','東京大賞典')
+
 #その他英数字
-df1['前走レース名'] = df1['前走レース名'].str.replace(r'Ａ',r'A')
-df1['前走レース名'] = df1['前走レース名'].str.replace(r'Ｂ',r'B')
-df1['前走レース名'] = df1['前走レース名'].str.replace(r'Ｃ',r'C')
-df1['前走レース名'] = df1['前走レース名'].str.replace(r'Ｄ',r'D')
-df1['前走レース名'] = df1['前走レース名'].str.replace(r'Ｆ',r'F')
-df1['前走レース名'] = df1['前走レース名'].str.replace(r'Ｊ',r'J')
-df1['前走レース名'] = df1['前走レース名'].str.replace(r'Ｍ',r'M')
-df1['前走レース名'] = df1['前走レース名'].str.replace(r'Ｈ',r'H')
-df1['前走レース名'] = df1['前走レース名'].str.replace(r'Ｒ',r'R')
-df1['前走レース名'] = df1['前走レース名'].str.replace(r'Ｓ',r'S')
-df1['前走レース名'] = df1['前走レース名'].str.replace(r'Ｔ',r'T')
-df1['前走レース名'] = df1['前走レース名'].str.replace(r'Ｗ',r'W')
-df1['前走レース名'] = df1['前走レース名'].str.replace(r'１',r'1')
-df1['前走レース名'] = df1['前走レース名'].str.replace(r'２',r'2')
-df1['前走レース名'] = df1['前走レース名'].str.replace(r'３',r'3')
-df1['前走レース名'] = df1['前走レース名'].str.replace(r'４',r'4')
-df1['前走レース名'] = df1['前走レース名'].str.replace(r'５',r'5')
-df1['前走レース名'] = df1['前走レース名'].str.replace(r'６',r'6')
-df1['前走レース名'] = df1['前走レース名'].str.replace(r'７',r'7')
-df1['前走レース名'] = df1['前走レース名'].str.replace(r'８',r'8')
-df1['前走レース名'] = df1['前走レース名'].str.replace(r'９',r'9')
-df1['前走レース名'] = df1['前走レース名'].str.replace(r'０',r'0')
+alphabet_table = str.maketrans('ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' )
+number_table = str.maketrans('０１２３４５６７８９', '0123456789' )
+df1['前走レース名'] = df1['前走レース名'].str.translate(alphabet_table)
+df1['前走レース名'] = df1['前走レース名'].str.translate(number_table)
 df1['前走レース名'] = df1['前走レース名'].str.replace(r'ｸﾗｽ',r'クラス')
 df1['前走レース名'] = df1['前走レース名'].str.replace(r'*','')
 
@@ -321,15 +349,8 @@ df1['馬ID'] = df1['馬ID'].str.replace(r'RX','')
 df1['馬ID'] = df1['馬ID'].str.replace(r'UX','')
 
 #前走着順の丸数字対策
-df1['前走着順'] = df1['前走着順'].str.replace(r'①',r'1')
-df1['前走着順'] = df1['前走着順'].str.replace(r'②',r'2')
-df1['前走着順'] = df1['前走着順'].str.replace(r'③',r'3')
-df1['前走着順'] = df1['前走着順'].str.replace(r'④',r'4')
-df1['前走着順'] = df1['前走着順'].str.replace(r'⑤',r'5')
-df1['前走着順'] = df1['前走着順'].str.replace(r'⑥',r'6')
-df1['前走着順'] = df1['前走着順'].str.replace(r'⑦',r'7')
-df1['前走着順'] = df1['前走着順'].str.replace(r'⑧',r'8')
-df1['前走着順'] = df1['前走着順'].str.replace(r'⑨',r'9')
+maru_number_table = str.maketrans('①②③④⑤⑥⑦⑧⑨', '123456789' )
+df1['前走着順'] = df1['前走着順'].str.translate(maru_number_table)
 df1['前走着順'] = df1['前走着順'].str.replace(r'⑩',r'10')
 df1['前走着順'] = df1['前走着順'].str.replace(r'⑪',r'11')
 df1['前走着順'] = df1['前走着順'].str.replace(r'⑫',r'12')
@@ -356,6 +377,9 @@ if info_num == 1 : #血統パート
         dfm  = pd.read_table(ret2, sep = '\n' , encoding = 'euc-jp' ,names = ['コンテンツ'] , dtype = object)
     except UnicodeDecodeError:
         dfm  = pd.read_table(ret2, sep = '\n' , encoding = 'cp932' ,names = ['コンテンツ'] , dtype = object)
+
+    dfm['コンテンツ'] = dfm['コンテンツ'].str.replace(' <strong>','<strong>')
+
 
 
     #<strong>で始まる文のリストを作成、最初の要素の1行前までを切り落とす
@@ -443,6 +467,9 @@ elif info_num == 2 : #馬体パート
     except UnicodeDecodeError:
         dfm  = pd.read_table(ret2, sep = '\n' , encoding = 'cp932' ,names = ['コンテンツ'] , dtype = object)
 
+    dfm['コンテンツ'] = dfm['コンテンツ'].str.replace(' <strong>','<strong>')
+
+
 
 
     #本文が始まる所まで切り落とす
@@ -522,6 +549,7 @@ elif info_num == 3 : #トレセンパート
         dfm  = pd.read_table(ret2, sep = ',' , encoding = 'shift-jis' ,names = ['馬名','コメント'] , dtype = object)
     except UnicodeDecodeError:
         dfm  = pd.read_table(ret2, sep = ',' , encoding = 'cp932' ,names = ['馬名','コメント'] , dtype = object)
+
 
     #置換祭り
 
