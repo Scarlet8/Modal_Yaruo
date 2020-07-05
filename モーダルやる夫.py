@@ -378,9 +378,8 @@ if info_num == 1 : #血統パート
     except UnicodeDecodeError:
         dfm  = pd.read_table(ret2, sep = '\n' , encoding = 'cp932' ,names = ['コンテンツ'] , dtype = object)
 
+    #半角スペースのエラー対策
     dfm['コンテンツ'] = dfm['コンテンツ'].str.replace(' <strong>','<strong>')
-
-
 
     #<strong>で始まる文のリストを作成、最初の要素の1行前までを切り落とす
     tgtxt = dfm.query('コンテンツ.str.startswith("<strong>")', engine = 'python')
@@ -467,10 +466,8 @@ elif info_num == 2 : #馬体パート
     except UnicodeDecodeError:
         dfm  = pd.read_table(ret2, sep = '\n' , encoding = 'cp932' ,names = ['コンテンツ'] , dtype = object)
 
+    #半角スペースのエラー対策
     dfm['コンテンツ'] = dfm['コンテンツ'].str.replace(' <strong>','<strong>')
-
-
-
 
     #本文が始まる所まで切り落とす
     if batai_num == 7:#哲三さん
@@ -552,10 +549,7 @@ elif info_num == 3 : #トレセンパート
 
 
     #置換祭り
-
     #<矢作師>みたいなところを新しい列で追加
-
-
     dfm['発言者'] = dfm['コメント']
     dfm['発言者'] = dfm['発言者'].str.replace(r'.+?。<', '<' , regex = True)
     dfm['発言者'] = dfm['発言者'].str.replace(r'.+?。＜', '＜' , regex = True)
