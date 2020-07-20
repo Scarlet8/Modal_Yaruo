@@ -322,8 +322,10 @@ df1['前走レース名'] = df1['前走レース名'].str.replace('東京大G1',
 
 #その他英数字
 alphabet_table = str.maketrans('ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' )
+alphabet_s_table = str.maketrans('ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ', 'abcdefghijklmnopqrstuvwxyz' )
 number_table = str.maketrans('０１２３４５６７８９', '0123456789' )
 df1['前走レース名'] = df1['前走レース名'].str.translate(alphabet_table)
+df1['前走レース名'] = df1['前走レース名'].str.translate(alphabet_s_table)
 df1['前走レース名'] = df1['前走レース名'].str.translate(number_table)
 df1['前走レース名'] = df1['前走レース名'].str.replace(r'ｸﾗｽ',r'クラス')
 df1['前走レース名'] = df1['前走レース名'].str.replace(r'*','')
@@ -364,6 +366,14 @@ df1['前走着順'] = df1['前走着順'].str.replace(r'⑯',r'16')
 df1['前走着順'] = df1['前走着順'].str.replace(r'⑰',r'17')
 df1['前走着順'] = df1['前走着順'].str.replace(r'⑱',r'18')
 
+#2代目の種牡馬の表記対応
+number_table2 = str.maketrans('０１２３４５６７８９', '0123456789' )
+df1['父'] = df1['父'].str.translate(number_table2)
+df1['母'] = df1['母'].str.translate(number_table2)
+df1['母父'] = df1['母父'].str.translate(number_table2)
+df1['父'] = df1['父'].str.replace(r'2',r'II')
+df1['母'] = df1['母'].str.replace(r'2',r'II')
+df1['母父'] = df1['母父'].str.replace(r'2',r'II')
 
 if info_num == 1 : #血統パート
     tkinter.messagebox.showinfo('モーダルやる夫','望田ファイルを選択してください！')
@@ -603,7 +613,7 @@ elif info_num == 3 : #トレセンパート
             tkinter.messagebox.showinfo('モーダルやる夫','！！！モーダル作成に移行します！！！')
 
     #モーダル出力
-    sleep(1)
+    sleep(0.5)
     defaultname2 = str('trecen_repo_' + nkID + '.csv')
     fTyp4 = [(".csv",".csv")]
     iDir4 = os.path.abspath(os.path.dirname(__file__))
