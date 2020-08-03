@@ -6,7 +6,8 @@ from time import sleep
 pre_num = (input('\n'*4 + 'やりたい作業の番号を選んでください(半角数字)\n\n\
 [1]：血統コラムからモーダルを作成\n\n\
 [2]：馬体診断コラムからモーダルを作成\n\n\
-[3]：馬三郎ファイルからトレセンリポートコラムとモーダルを作成' \
+[3]：馬三郎ファイルからトレセンリポートコラムとモーダルを作成\n\n\
+[4]：トレセンリポートコラムからモーダルを作成' \
 + '\n\n' + '入力してください→：' ))
 
 try:
@@ -17,8 +18,9 @@ except ValueError: #数字以外のエラー処理
     pre_num = (input('やりたい作業の番号を選んでください(半角数字)\n\n\
     [1]：血統コラムからモーダルを作成\n\n\
     [2]：馬体診断コラムからモーダルを作成\n\n\
-    [3]：馬三郎ファイルからトレセンリポートコラムとモーダルを作成' \
-    + '\n\n' + '入力してください→：'))
+    [3]：馬三郎ファイルからトレセンリポートコラムとモーダルを作成\n\n\
+    [4]：トレセンリポートコラムからモーダルを作成' \
+    + '\n\n' + '入力してください→：' ))
     try:
         info_num = int(pre_num)
     except ValueError:
@@ -26,14 +28,15 @@ except ValueError: #数字以外のエラー処理
         sleep(1)
         sys.exit(1)
 
-if info_num > 3 : #4以上のエラー処理
-    print('\n'*4 + '＜＜警告＞＞1から3までの半角数字を入力してください！' + '\n'*4 )
+if info_num > 4 : #5以上のエラー処理
+    print('\n'*4 + '＜＜警告＞＞1から4までの半角数字を入力してください！' + '\n'*4 )
     info_num = int(input('やりたい作業の番号を選んでください(半角数字)\n\n\
     [1]：血統コラムからモーダルを作成\n\n\
     [2]：馬体診断コラムからモーダルを作成\n\n\
-    [3]：馬三郎ファイルからトレセンリポートコラムとモーダルを作成' \
-     + '\n'*4 + '今度こそ正しく入力してください→：'))
-    if info_num > 3:
+    [3]：馬三郎ファイルからトレセンリポートコラムとモーダルを作成\n\n\
+    [4]：トレセンリポートコラムからモーダルを作成' \
+    + '\n\n' + '入力してください→：' ))
+    if info_num > 4:
         print('\n'*4 + '最初からやり直してください\n\nアプリを終了します' + '\n'*4 )
         sleep(1)
         sys.exit(1)
@@ -47,8 +50,9 @@ elif info_num < 1: #1未満のエラー処理
     info_num = int(input('やりたい作業の番号を選んでください(半角数字)\n\n\
     [1]：血統コラムからモーダルを作成\n\n\
     [2]：馬体診断コラムからモーダルを作成\n\n\
-    [3]：馬三郎ファイルからトレセンリポートコラムとモーダルを作成' \
-    + '\n'*4 + '今度こそ正しく入力してください→：'))
+    [3]：馬三郎ファイルからトレセンリポートコラムとモーダルを作成\n\n\
+    [4]：トレセンリポートコラムからモーダルを作成' \
+    + '\n\n' + '入力してください→：' ))
     if info_num < 1:
         print('\n'*4 + '最初からやり直してください\n\nアプリを終了します' + '\n'*4 )
         sleep(1)
@@ -304,6 +308,7 @@ df1['前走レース名'] = df1['前走レース名'].str.replace('ブリーG3',
 df1['前走レース名'] = df1['前走レース名'].str.replace('テレ玉G2','オーバルスプリント')
 df1['前走レース名'] = df1['前走レース名'].str.replace('白山大G3','白山大賞典')
 df1['前走レース名'] = df1['前走レース名'].str.replace('日本テG2','日本テレビ盃')
+df1['前走レース名'] = df1['前走レース名'].str.replace('日本ＴG2','日本テレビ盃')
 df1['前走レース名'] = df1['前走レース名'].str.replace('東京盃G2','東京盃')
 df1['前走レース名'] = df1['前走レース名'].str.replace('ＬプレG2','レディスプレリュード')
 df1['前走レース名'] = df1['前走レース名'].str.replace('マイルG1','マイルCS南部杯')
@@ -543,7 +548,7 @@ elif info_num == 2 : #馬体パート
             sleep(1)
             sys.exit(1)
 
-elif info_num == 3 : #トレセンパート
+elif info_num == 3 : #トレセンパート（馬三郎ファイルから）
     #馬三郎ファイルを読み込む
     tkinter.messagebox.showinfo('モーダルやる夫','馬三郎ファイル（コメント）を選択してください！')
     ret2 = tkinter.filedialog.askopenfilename(title = '馬三郎ファイル（コメント）を選ぶ', initialdir = cd , multiple = False)
@@ -611,6 +616,71 @@ elif info_num == 3 : #トレセンパート
             +str(row[14])+'\n「'+str(row[13]).rstrip('。')+'」\n\n')
         else:
             tkinter.messagebox.showinfo('モーダルやる夫','！！！モーダル作成に移行します！！！')
+
+    #モーダル出力
+    sleep(0.5)
+    defaultname2 = str('trecen_repo_' + nkID + '.csv')
+    fTyp4 = [(".csv",".csv")]
+    iDir4 = os.path.abspath(os.path.dirname(__file__))
+    tkinter.messagebox.showinfo('モーダルやる夫','モーダルファイルの出力先を選択してください！')
+    file4 = tkinter.filedialog.asksaveasfilename(initialfile = defaultname2 , filetypes = fTyp4,initialdir = iDir4)
+    with open(file4,mode = 'w',encoding='utf-8') as f:
+        for row in df3str:
+            f.write(nkID + ',' + str(row[1]) + ',' + year + filename.rstrip('.csv') + '(' + str(row[2]) + ')' + ',' + str(row[14]) + '「' + str(row[13].rstrip('。')) + '」\n')
+        else:
+            sleep(1)
+            tkinter.messagebox.showinfo('モーダルやる夫','☆☆☆出力完了しました☆☆☆')
+            print('\n\n\n☆☆☆出力完了しました☆☆☆')
+            sleep(1)
+            sys.exit(1)
+
+elif info_num == 4 : #トレセンパート（コラムから）
+    tkinter.messagebox.showinfo('モーダルやる夫','トレセンコラムの本文ファイルを選択してください！')
+    ret2 = tkinter.filedialog.askopenfilename(title = 'トレセンコラムの本文ファイルを選ぶ', initialdir = cd , multiple = False)
+    if ret2 == "": #キャンセル押したときに終了
+        sleep(1)
+        sys.exit(1)
+
+    try: #デコード処理
+        dfm  = pd.read_table(ret2, sep = '\n' , encoding = 'shift-jis' ,names = ['コンテンツ'] , dtype = object)
+    except UnicodeDecodeError:
+        dfm = pd.read_table(ret2, sep = '\n' , encoding = 'utf-8' ,names = ['コンテンツ'] , dtype = object)
+    except UnicodeDecodeError:
+        dfm  = pd.read_table(ret2, sep = '\n' , encoding = 'euc-jp' ,names = ['コンテンツ'] , dtype = object)
+    except UnicodeDecodeError:
+        dfm  = pd.read_table(ret2, sep = '\n' , encoding = 'cp932' ,names = ['コンテンツ'] , dtype = object)
+
+    #半角スペースのエラー対策
+    dfm['コンテンツ'] = dfm['コンテンツ'].str.replace(' <strong>','<strong>')
+
+    #<strong>で始まる文のリストを作成、最初の要素の1行前までを切り落とす
+    tgtxt = dfm.query('コンテンツ.str.startswith("<strong>")', engine = 'python')
+    tgtnum = tgtxt.index[0]
+    dfm = dfm.drop(range(tgtnum))
+    dfm = dfm.reset_index()
+
+    #ヤマザキ春の置換祭り
+    dfm['コンテンツ'] = dfm['コンテンツ'].str.replace('\u3000','')
+    dfm['コンテンツ'] = dfm['コンテンツ'].str.replace('\t','')
+    dfm['コンテンツ'] = dfm['コンテンツ'].str.replace('\n','')
+    dfm['コンテンツ'] = dfm['コンテンツ'].str.replace('<strong>','')
+    dfm['コンテンツ'] = dfm['コンテンツ'].str.replace('</strong>','')
+    dfm['コンテンツ'] = dfm['コンテンツ'].str.replace('　','')
+    dfm['コンテンツ'] = dfm['コンテンツ'].str.replace(' ','')
+
+
+    dfn1 = [dfm['コンテンツ'][i*3] for i in range(int(len(dfm)/3))] #1行目が馬名
+    dfn2 = [dfm['コンテンツ'][i*3+1] for i in range(int(len(dfm)/3))] #2行目がコメント
+    dfn3 = [dfm['コンテンツ'][i*3+2] for i in range(int(len(dfm)/3))] #3行目が評価
+
+    DF_NEW = pd.DataFrame({'馬名': dfn1 ,'コメント': dfn2,'評価': dfn3}) #TARGETのデータフレームに結合するために新しく整形
+
+    df3 = pd.merge(df1,DF_NEW,on = '馬名') #2つのデータフレームを結合
+    df3str = df3.values.tolist()
+    race = str(df3['レースID'][0])
+    nkID = race[:4] + race[8:] #TARGETのレースIDをnetkeiba用に変換
+    year = race[2:4]
+    filename = os.path.basename(ret1) #ファイル名からレース名を取得
 
     #モーダル出力
     sleep(0.5)
