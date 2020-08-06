@@ -442,6 +442,8 @@ if info_num == 1 : #血統パート
 
     DF_NEW = pd.DataFrame({'馬名': dfn1 ,'コメント': dfn2,'評価': dfn3}) #TARGETのデータフレームに結合するために新しく整形
 
+
+
     df3 = pd.merge(df1,DF_NEW,on = '馬名') #2つのデータフレームを結合
     df3str = df3.values.tolist()
     race = str(df3['レースID'][0])
@@ -669,11 +671,11 @@ elif info_num == 4 : #トレセンパート（コラムから）
     dfm['コンテンツ'] = dfm['コンテンツ'].str.replace(' ','')
 
 
-    dfn1 = [dfm['コンテンツ'][i*3] for i in range(int(len(dfm)/3))] #1行目が馬名
-    dfn2 = [dfm['コンテンツ'][i*3+1] for i in range(int(len(dfm)/3))] #2行目がコメント
-    dfn3 = [dfm['コンテンツ'][i*3+2] for i in range(int(len(dfm)/3))] #3行目が評価
+    dfn1 = [dfm['コンテンツ'][i*5] for i in range(int(len(dfm)/5))] #1行目が馬名
+    dfn2 = [dfm['コンテンツ'][i*5+3] for i in range(int(len(dfm)/5))] #4行目が発言者
+    dfn3 = [dfm['コンテンツ'][i*5+4] for i in range(int(len(dfm)/5))] #5行目がコメント
 
-    DF_NEW = pd.DataFrame({'馬名': dfn1 ,'コメント': dfn2,'評価': dfn3}) #TARGETのデータフレームに結合するために新しく整形
+    DF_NEW = pd.DataFrame({'馬名': dfn1 ,'発言者': dfn2 ,'コメント': dfn3 }) #TARGETのデータフレームに結合するために新しく整形
 
     df3 = pd.merge(df1,DF_NEW,on = '馬名') #2つのデータフレームを結合
     df3str = df3.values.tolist()
@@ -691,9 +693,9 @@ elif info_num == 4 : #トレセンパート（コラムから）
     file4 = tkinter.filedialog.asksaveasfilename(initialfile = defaultname2 , filetypes = fTyp4,initialdir = iDir4)
     with open(file4,mode = 'w',encoding='utf-8') as f:
         for row in df3str:
-            f.write(nkID + ',' + str(row[1]) + ',' + year + filename.rstrip('.csv') + '(' + str(row[2]) + ')' + ',' + str(row[14]) + '「' + str(row[13].rstrip('。')) + '」\n')
+            f.write(nkID + ',' + str(row[1]) + ',' + year + filename.rstrip('.csv') + '(' + str(row[2]) + ')' + ',' + str(row[13]) + str(row[14].rstrip('。')) + '\n')
         else:
-            sleep(1)
+            sleep(0.5)
             tkinter.messagebox.showinfo('モーダルやる夫','☆☆☆出力完了しました☆☆☆')
             print('\n\n\n☆☆☆出力完了しました☆☆☆')
             sleep(1)
