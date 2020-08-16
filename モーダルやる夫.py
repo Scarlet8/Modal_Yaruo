@@ -435,12 +435,22 @@ if info_num == 1 : #血統パート
     dfm['コンテンツ'] = dfm['コンテンツ'].str.replace('　','')
     dfm['コンテンツ'] = dfm['コンテンツ'].str.replace(' ','')
 
+    #まるが漢字だった時の対応
+    dfm['コンテンツ'] = dfm['コンテンツ'].str.replace('スピード〇',r',○')
+    dfm['コンテンツ'] = dfm['コンテンツ'].str.replace('コース〇',r',○')
+    dfm['コンテンツ'] = dfm['コンテンツ'].str.replace('距離〇',r'望田,○')
+    dfm['コンテンツ'] = dfm['コンテンツ'].str.replace('スピード◯',r',○')
+    dfm['コンテンツ'] = dfm['コンテンツ'].str.replace('コース◯',r',○')
+    dfm['コンテンツ'] = dfm['コンテンツ'].str.replace('距離◯',r'望田,○')
 
+    #新しいリスト作成
     dfn1 = [dfm['コンテンツ'][i*3] for i in range(int(len(dfm)/3))] #1行目が馬名
     dfn2 = [dfm['コンテンツ'][i*3+1] for i in range(int(len(dfm)/3))] #2行目がコメント
     dfn3 = [dfm['コンテンツ'][i*3+2] for i in range(int(len(dfm)/3))] #3行目が評価
 
-    DF_NEW = pd.DataFrame({'馬名': dfn1 ,'コメント': dfn2,'評価': dfn3}) #TARGETのデータフレームに結合するために新しく整形
+
+    #TARGETのデータフレームに結合するために新しく整形
+    DF_NEW = pd.DataFrame({'馬名': dfn1 ,'コメント': dfn2,'評価': dfn3})
 
 
 
